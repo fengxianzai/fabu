@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>照片打印机</h1>
+    <h1>扫描枪</h1>
   </div>
 </template>
 

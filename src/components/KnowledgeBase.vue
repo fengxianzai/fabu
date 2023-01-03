@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>合格证打印机</h1>
+    <h1>知识库</h1>
   </div>
 </template>
 

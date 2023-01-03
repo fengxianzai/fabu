@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>COC打印机</h1>
+    <h1>用户管理</h1>
   </div>
 </template>
 

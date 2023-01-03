@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>重型环保打印机</h1>
+    <h1>运维台账</h1>
   </div>
 </template>
 

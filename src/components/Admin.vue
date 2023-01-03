@@ -28,8 +28,8 @@
             <template slot="title"
               ><i class="iconfont icon-xitongyunwei"></i>运维管理</template
             >
-            <el-menu-item index="3-1">知识库</el-menu-item>
-            <el-menu-item index="3-2">运维台账</el-menu-item>
+            <el-menu-item index="/admin/KnowledgeBase">知识库</el-menu-item>
+            <el-menu-item index="/admin/YRcord">运维台账</el-menu-item>
             <el-submenu index="3-2">
               <template slot="title">服务器</template>
               <el-menu-item index="3-2-1">服务器点检</el-menu-item>
@@ -41,28 +41,8 @@
             <template slot="title"
               ><i class="iconfont icon-shebei mr-3"></i>设备管理</template
             >
-            <el-submenu index="2-1">
-              <template slot="title">打印机</template>
-              <el-menu-item index="/equipment/printer/Certificate"
-                >合格证打印机</el-menu-item
-              >
-              <el-menu-item index="/equipment/printer/Envm6"
-                >轻型环保打印机</el-menu-item
-              >
-              <el-menu-item index="/equipment/printer/picture"
-                >照片打印机</el-menu-item
-              >
-              <el-menu-item index="/equipment/printer/COC"
-                >COC证书打印机</el-menu-item
-              >
-              <el-menu-item index="/equipment/printer/Envm4"
-                >重型环保打印机</el-menu-item
-              >
-            </el-submenu>
-            <el-submenu index="2-2">
-              <template slot="title">扫描枪</template>
-              <el-menu-item index="2-2-1">扫描枪1</el-menu-item>
-            </el-submenu>
+            <el-menu-item index="/equipment/printer">打印机</el-menu-item>
+            <el-menu-item index="/equipment/sanner">扫描枪</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

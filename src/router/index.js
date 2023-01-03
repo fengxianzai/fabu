@@ -3,11 +3,11 @@ import Router from 'vue-router';
 import Login from '@/components/Login';
 import Admin from '@/components/Admin';
 import HelloWorld from '@/components/HelloWorld';
-import Certificate from '@/components/printer/Certificate';
-import COC from '@/components/printer/COC';
-import Envm4 from '@/components/printer/Envm4';
-import Envm6 from '@/components/printer/Envm6';
-import picture from '@/components/printer/picture';
+import Printer from '@/components/Printer';
+import Scanner from '@/components/Scanner';
+import ManageUser from '@/components/ManageUser';
+import KnowledgeBase from '@/components/KnowledgeBase';
+import YRcord from '@/components/YRcord';
 Vue.use(Router);
 
 export default new Router({
@@ -34,29 +34,29 @@ export default new Router({
           name: '后台主页',
         },
         {
-          path: '/equipment/printer/Certificate',
-          component: Certificate,
-          name: '合格证打印机',
+          path: '/equipment/printer',
+          component: Printer,
+          name: '打印机',
         },
         {
-          path: '/equipment/printer/COC',
-          component: COC,
-          name: 'COC打印机',
+          path: '/equipment/sanner',
+          component: Scanner,
+          name: '扫描枪',
         },
         {
-          path: '/equipment/printer/Envm4',
-          component: Envm4,
-          name: '重型环保打印机',
+          path: '/admin/user',
+          component: ManageUser,
+          name: '用户管理',
         },
         {
-          path: '/equipment/printer/Envm6',
-          component: Envm6,
-          name: '轻型环保打印机',
+          path: '/admin/KnowledgeBase',
+          component: KnowledgeBase,
+          name: '知识库',
         },
         {
-          path: '/equipment/printer/picture',
-          component: picture,
-          name: '照片打印机',
+          path: '/admin/YRcord',
+          component: YRcord,
+          name: '运维台账',
         },
       ],
     },

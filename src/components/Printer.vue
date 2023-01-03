@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>轻型环保打印机</h1>
+    <h1>打印机</h1>
   </div>
 </template>
 
