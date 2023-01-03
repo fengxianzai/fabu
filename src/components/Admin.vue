@@ -2,12 +2,12 @@
   <div class="common-layout">
     <el-container>
       <!-- 左边栏aside -->
-      <el-aside width="230px" style="background:#092844;">
+      <el-aside width="230px" style="background:#3b3a40;">
         <h3>法规系统运维平台</h3>
         <el-menu
           text-color="#fff"
           active-text-color="#207bca"
-          background-color="#092844"
+          background-color="#3b3a40"
           unique-opened
           router
           class="el-menu"
@@ -49,26 +49,39 @@
       <!-- 右边栏 -->
       <el-container>
         <!-- 顶部栏header -->
-        <el-header style="background:#ecf5ff;text-align: right;font-size: 12px">
-          <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <span>您好，Vow!</span>
+        <el-header
+          style="height:58px;background:#fafafb;text-align: right;font-size: 12px;border-bottom:1px solid #dbdcde"
+        >
+          <el-row type="flex" align="middle" style="height:100%">
+            <el-col :span="6">
+              <el-input
+                placeholder="输入你要搜索的内容"
+                suffix-icon="el-icon-search"
+              />
+            </el-col>
+            <el-col :span="4" :offset="14" style="height:30px">
+              <el-row
+                type="flex"
+                align="middle"
+                justify="right"
+                style="height:100%"
+              >
+                <el-col>
+                  <el-image
+                    style="width: 30px; height: 30px;margin-right:10px;border-radius:15px"
+                    src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                    :fit="cover"
+                  ></el-image>
+                </el-col>
+                <el-col style="text-align:left">
+                  <span>您好，Vow!</span>
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
         </el-header>
         <!-- 主页部分main -->
-        <el-main>
-          <!-- <el-table :data="tableData">
-            <el-table-column prop="date" label="日期" width="140">
-            </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120">
-            </el-table-column>
-            <el-table-column prop="address" label="地址"> </el-table-column>
-          </el-table> -->
+        <el-main style="background:#f1f1f2">
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -78,18 +91,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-    };
-    return {
-      msg: '系统主界面',
-      tableData: Array(5).fill(item),
-    };
-  },
+  name: 'Admin',
 };
 </script>
 
