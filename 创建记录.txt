@@ -1,0 +1,124 @@
+使用环境： Vue3 + Koa2 + Node
+
+安装yarn：
+npm install --global yarn
+yarn --version
+
+安装：
+
+注意：从vue3开始，包名称从 更改vue-cli为@vue/cli，如果之前使用过vue3之前的版本，并安装过vue-cli，需要先卸载vue-cli，卸载命令：
+npm uninstall vue-cli -g或卸载它yarn global remove vue-cli
+
+安装vue3的脚手架vue-cli：
+npm install -g @vue/cli
+或者
+yarn global add @vue/cli
+
+可以检查版本：vue --version
+
+创建项目：
+vue create  项目名称
+
+启动项目：
+npm run serve
+或者
+yarn serve
+
+vue @vue/cli3 配置关闭 eslint：
+在工程目录下创建文件：vue-config.js
+添加如下内容：
+module.exports = {
+    lintOnSave: false
+}
+lintOnSave: false  表示关闭eslint
+
+
+添加路由：
+yarn add vue-router
+参考：https://www.cnblogs.com/nuoruo/p/14328578.html
+
+使用前端UI框架：element-ui，安装：yarn add element-ui
+然后再main.js中引入 element-ui ：
+
+import ElementUI from 'element-ui'   //引入element-ui
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI) // Vue全局使用
+
+创建一个登录组件：Login.vue
+
+
+使用koa2：
+创建一个app.js文件，用作后端入口文件
+安装koa2： yarn add koa2
+
+由async标记的函数称为异步函数，在异步函数中，可以用await调用另一个异步函数，这两个关键字将在ES7中引入。
+
+middleware的顺序很重要，也就是调用app.use()的顺序决定了middleware的顺序。
+
+此外，如果一个middleware没有调用await next()，会怎么办？答案是后续的middleware将不再执行了
+
+安装koa-router：yarn add koa-router
+
+处理post请求时，需要安装koa-bodyparser中间件来解析
+yarn add koa-bodyparser
+
+https://www.liaoxuefeng.com/wiki/1022910821149312/1023026038570336
+https://www.jmjc.tech/less/124
+https://koa.bootcss.com/#
+
+使用sequlize操作数据库：https://itbilu.com/nodejs/npm/VkYIaRPz-.html
+https://blog.csdn.net/interestANd/article/details/119061765
+
+
+设置代理：https://www.cnblogs.com/Fcode-/p/12745127.html
+因为前端 Koa2 用的是 3000 端口，后端 Vue 用的是 8080 端口，两者端口不一样，前端就无法直接获取后端的数据，也就是跨域访问。 为了解决解决跨域的问题，需要安装 koa2-cors 
+安装：yarn add koa2-cors
+
+在app.js中添加：
+const cors = require('koa2-cors');       //添加
+app.use(cors({
+  origin: function(ctx) {
+    return ctx.header.origin
+  }, // 允许发来请求的域名
+  allowMethods: [ 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ], // 设置所允许的 HTTP请求方法
+  credentials: true, // 标示该响应是合法的
+}));
+
+在vue.config.js文件中添加如下代码：
+module.exports = {
+  publicPath: './',
+  lintOnSave: false,
+  devServer: {
+    host: '0.0.0.0',
+    port: 8081,
+    proxy: 'http://localhost:3000'               //设置代理
+  }
+}
+
+proxy 属性尤为关键，它完成了一件事情，将默认的请求地址中的 localhost:8080 转换成了 localhost:3000 ,也就是 Koa2 后端的默认地址，从而可以实现接收来自后端发送过来的数据。
+
+ 注：Vue-CLi 默认是不存在  vue.config.js 文件的，需要添加个性化配置时，是需要我们新建的，详细的配置参考，在 Vue-CLi 的主页，配置参考页面下。
+
+运用了JSON-WEB-TOKEN的登录系统应该是这样的：
+            
+1.用户在登录页输入账号密码，将账号密码（密码进行md5加密）发送请求给后端
+2.后端验证一下用户的账号和密码的信息，如果符合，就下发一个TOKEN返回给客户端。如果不符合就不发送TOKEN回去，返回验证错误信息。
+3.如果登录成功，客户端将TOKEN用某种方式存下来（SessionStorage、LocalStorage）,之后要请求其他资源的时候，在请求头（Header）里带上这个TOKEN进行请求。
+4.后端收到请求信息，先验证一下TOKEN是否有效，有效则下发请求的资源，无效则返回验证错误。
+            
+通过这个TOKEN的方式，客户端和服务端之间的访问，是无状态的：也就是服务端不知道你这个用户到底还在不在线，只要你发送的请求头里的TOKEN是正确的我就给你返回你想要的资源。这样能够不占用服务端宝贵的空间资源，而且如果涉及到服务器集群，如果服务器进行维护或者迁移或者需要CDN节点的分配的话，无状态的设计显然维护成本更低。
+话不多说，我们来把JSON-WEB-TOKEN用到我们的项目中。
+yarn add jsonwebtoken，安装Koa的JSON-WEB-TOKEN库。
+
+同时，前端向后端发送的密码应当进行md5加密。
+
+所以我们需要安装一下md5的库： yarn add md5
+
+MYSQL数据库里面的所有密码批量MD5加密:
+如果你的字段够长度的话：
+UPDATE users SET password = MD5(password);
+如果长度不够，可以先增加长度后再做，或者多建一列，完成后删除原来的列！（如passwd）
+UPDATE users SET passwd = MD5(password);
+
+
+使用工具nodemon：自动检测到目录中的文件更改时通过重新启动应用程序来调试基于node.js的应用程序。

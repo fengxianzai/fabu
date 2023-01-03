@@ -1,0 +1,10 @@
+ scp -r dist Administrator@47.99.62.251:C:/nginx-1.20.1/www
+
+记住密码功能：
+ https://blog.csdn.net/weixin_39089928/article/details/110231770
+
+博客参照：
+ https://gitee.com/jlqsczw/blog-vue/#121-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9D%97
+
+ 文本编辑器：
+ http://editor.md.ipandao.com/examples/index.html
