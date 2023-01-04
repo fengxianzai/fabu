@@ -2,20 +2,26 @@
 const user = require('../models/user.js');
 
 //获取用户信息
-const getUserInfo = async function(ctx, next) {
+const getUserInfo = async function(ctx) {
   //获取url里传过来的参数的id
-  const id = ctx.params.id;
+  const id = ctx.query.id;
   //通过模型中定义的方法通过id在数据库中查找
   const result = await user.getUserById(id);
   //将查询到的结果放在response的body中
   ctx.response.body = JSON.parse(result);
-  next();
+};
+
+// 获取所有用户信息
+const getAllUsers = async function(ctx) {
+  const vow_val = await user.getAllUser();
+  ctx.response.body = vow_val;
 };
 
 //通过post请求过来的登录数据进行验证
-const postUserAuth = async function(ctx, next) {
+const postUserAuth = async function(ctx) {
   //获取post过来的登录数据
   const postData = ctx.request.body;
+  console.log(postData);
   //通过模型中定义的方法按照post过来的用户名进行查找
   const userInfo = await user.getUserByName(postData.username);
 
@@ -43,10 +49,10 @@ const postUserAuth = async function(ctx, next) {
       info: '用户不存在！',
     });
   }
-  next();
 };
 
 module.exports = {
   getUserInfo,
   postUserAuth,
+  getAllUsers,
 };
