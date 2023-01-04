@@ -2,6 +2,13 @@
 const userModel = require('../schema/user.js');
 const User = userModel.User;
 
+// 查询所有用户
+// const getAllUser = async function() {
+//   try {
+//     return {};
+//   } catch (error) {}
+// };
+
 //通过用户ID进行查找
 const getUserById = async function(id) {
   try {
@@ -45,4 +52,5 @@ const getUserByName = async function(name) {
 module.exports = {
   getUserById,
   getUserByName,
+  getAllUser,
 };
