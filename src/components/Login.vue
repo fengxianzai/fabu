@@ -85,7 +85,6 @@ export default {
   methods: {
     handleBindPhone() {
       this.$refs.loginForm.validate(() => {
-        console.log(222);
         this.$axios
           .post('/user/login', this.formLogin) //将登录信息发送给后端
           .then((res) => {
@@ -99,7 +98,6 @@ export default {
               this.$router.push('/admin'); //进入Wlog页面，登录成功
             } else {
               this.$message.error(res.data.info); //登录失败，显示提示语
-              console.log(111);
             }
           });
       });

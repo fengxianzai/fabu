@@ -70,7 +70,7 @@
                   <el-image
                     style="width: 30px; height: 30px;margin-right:10px;border-radius:15px"
                     src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                    :fit="cover"
+                    fit="cover"
                   ></el-image>
                 </el-col>
                 <el-col style="text-align:left">
@@ -82,6 +82,17 @@
         </el-header>
         <!-- 主页部分main -->
         <el-main style="background:#f1f1f2">
+          <el-breadcrumb
+            separator-class="el-icon-arrow-right"
+            style="margin:20px 0 26px 0;border-bottom: 1px solid #dbdcde;padding-bottom: 8px;"
+          >
+            <el-breadcrumb-item :to="{ path: '/admin/home' }"
+              >运维管理</el-breadcrumb-item
+            >
+            <el-breadcrumb-item><a href="/">运维台账</a></el-breadcrumb-item>
+            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          </el-breadcrumb>
           <router-view></router-view>
         </el-main>
       </el-container>
