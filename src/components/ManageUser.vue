@@ -9,9 +9,8 @@
       <el-col>
         <el-table
           ref="multipleTable"
-          :data="tableData"
+          :data="userData"
           highlight-current-row
-          @selection-change="handleSelectionChange"
           :cell-style="rowClass"
           :header-cell-style="headClass"
           :header-cell-class-name="cellClass"
@@ -19,12 +18,12 @@
           style="width: 100%;background:#fafafb"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column prop="date" label="用户ID" width="180">
+          <el-table-column prop="id" label="用户ID" width="180">
           </el-table-column>
-          <el-table-column prop="name" label="用户名" width="180">
+          <el-table-column prop="user_name" label="用户名" width="180">
           </el-table-column>
-          <el-table-column prop="address" label="加入时间"> </el-table-column>
-          <el-table-column prop="address1" label="权限"> </el-table-column>
+          <el-table-column prop="password" label="加入时间"> </el-table-column>
+          <el-table-column prop="password" label="权限"> </el-table-column>
           <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
               <el-button type="primary" size="small">编辑</el-button>
@@ -49,44 +48,21 @@
 export default {
   name: 'ManageUser',
   data() {
+    const userData = [];
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      userData,
     };
   },
   methods: {
     // 用户全选
     toggleSelection() {
-      if (this.tableData) {
-        this.tableData.forEach((row) => {
+      if (this.userData) {
+        this.userData.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row);
         });
       } else {
         this.$refs.multipleTable.clearSelection();
       }
-    },
-    handleCurrentChange(val) {
-      this.currentRow = val;
     },
     // 禁用表格头部多选按钮
     cellClass(row) {
@@ -102,6 +78,21 @@ export default {
     rowClass() {
       return 'text-align: center;background:#fafafb;';
     },
+  },
+  // 请求用户数据
+  mounted() {
+    this.$axios
+      .get('/user/getUser/vow')
+      .then((res) => {
+        //请求成功以后的回调函数
+        this.userData = res.data;
+      })
+      .catch((error) => {
+        //回调函数
+        //请求失败或者then里面的代码出现bug的时候
+        console.log('http请求失败');
+        console.log(error); //期望从服务端返回错误信息
+      });
   },
 };
 </script>
