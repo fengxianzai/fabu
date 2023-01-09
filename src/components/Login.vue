@@ -104,8 +104,9 @@ export default {
                 type: 'success',
                 message: '登录成功！',
               });
-              // 将后端返回的token存储在本地LocalStorage中
-              window.localStorage.setItem('jwtToken', res.data.token);
+              // 将后端返回的token和username存储在本地LocalStorage中
+              window.sessionStorage.setItem('jwtToken', res.data.token);
+              window.sessionStorage.setItem('username', res.data.username);
               this.$router.push('/admin/home'); //进入Wlog页面，登录成功
               // this.$router.push({ path: 'admin' }); //进入Wlog页面，登录成功
             } else {

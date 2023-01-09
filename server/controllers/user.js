@@ -43,6 +43,7 @@ const postUserAuth = async function(ctx) {
             success: true,
             info: '密码正确！',
             token: jwtToken,
+            username: JSON.parse(userdate).user_name,
           });
         }
       }

@@ -66,7 +66,7 @@ const router = new Router({
 // 全局路由守卫 拦截所有路由
 router.beforeEach((to, from, next) => {
   // 获取token
-  const token = window.localStorage.getItem('jwtToken');
+  const token = window.sessionStorage.getItem('jwtToken');
   if (to.path === '/login') {
     // 直接放行
     next();

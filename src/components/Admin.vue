@@ -1,8 +1,13 @@
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container v-model="isCollapse">
       <!-- 左边栏aside -->
-      <el-aside width="230px" style="background:#3b3a40;">
+      <!-- :width="isCollapse ? '64px' : '220px'" -->
+      <el-aside
+        :width="isCollapse ? '64px' : '220px'"
+        class="aside-con"
+        style="background:#3b3a40;"
+      >
         <h3>法规系统运维平台</h3>
         <el-menu
           text-color="#fff"
@@ -11,40 +16,64 @@
           unique-opened
           router
           class="el-menu"
+          :collapse="isCollapse"
+          :collapse-transition="false"
         >
           <!-- 首页 -->
-          <el-menu-item index="/admin/home"
-            ><i class="el-icon-s-home"></i>首页</el-menu-item
-          >
+          <el-menu-item index="/admin/home">
+            <i class="el-icon-s-home"></i>
+            <span>首页</span>
+          </el-menu-item>
 
           <!-- 用户管理 -->
           <el-menu-item index="/admin/user">
             <i class="iconfont icon-yonghu"></i>
-            用户管理</el-menu-item
-          >
+            <span>用户管理</span>
+          </el-menu-item>
 
           <!-- 运维管理 -->
           <el-submenu index="3">
-            <template slot="title"
-              ><i class="iconfont icon-xitongyunwei"></i>运维管理</template
-            >
-            <el-menu-item index="/admin/KnowledgeBase">知识库</el-menu-item>
-            <el-menu-item index="/admin/YRcord">运维台账</el-menu-item>
+            <template slot="title">
+              <i class="iconfont icon-xitongyunwei"></i>
+              <span>运维管理</span>
+            </template>
+            <el-menu-item index="/admin/KnowledgeBase">
+              <span>知识库</span>
+            </el-menu-item>
+            <el-menu-item index="/admin/YRcord"
+              ><span>运维台账</span>
+            </el-menu-item>
             <el-submenu index="3-2">
-              <template slot="title">服务器</template>
-              <el-menu-item index="3-2-1">服务器点检</el-menu-item>
+              <template slot="title">
+                <span>服务器</span>
+              </template>
+              <el-menu-item index="3-2-1">
+                <span>服务器点检</span>
+              </el-menu-item>
             </el-submenu>
           </el-submenu>
 
           <!-- 设备管理 -->
           <el-submenu index="2">
-            <template slot="title"
-              ><i class="iconfont icon-shebei mr-3"></i>设备管理</template
-            >
-            <el-menu-item index="/equipment/printer">打印机</el-menu-item>
-            <el-menu-item index="/equipment/sanner">扫描枪</el-menu-item>
+            <template slot="title">
+              <i class="iconfont icon-shebei mr-3"></i>
+              <span>设备管理</span>
+            </template>
+            <el-menu-item index="/equipment/printer">
+              <span>打印机</span>
+            </el-menu-item>
+            <el-menu-item index="/equipment/sanner">
+              <span>扫描枪</span>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
+
+        <!-- 侧边栏收缩 -->
+        <div class="toggle-btn" @click="toggleCollapse()">
+          <div>
+            <i class="iconfont" :class="btnicon"></i>
+          </div>
+        </div>
       </el-aside>
       <!-- 右边栏 -->
       <el-container>
@@ -59,7 +88,7 @@
                 suffix-icon="el-icon-search"
               />
             </el-col>
-            <el-col :span="4" :offset="14" style="height:30px">
+            <el-col :span="6" :offset="14" style="height:30px">
               <el-row
                 type="flex"
                 align="middle"
@@ -74,7 +103,21 @@
                   ></el-image>
                 </el-col>
                 <el-col style="text-align:left">
-                  <span>您好，Vow!</span>
+                  <!-- <span>您好，Vow!</span> -->
+                  <el-dropdown trigger="click">
+                    <span class="el-dropdown-link">
+                      您好，{{ username }} !<i
+                        class="el-icon-arrow-down el-icon--right"
+                      ></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item>
+                        <el-button @click="logout" type="text"
+                          >退出登录</el-button
+                        >
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
                 </el-col>
               </el-row>
             </el-col>
@@ -103,6 +146,31 @@
 <script>
 export default {
   name: 'Admin',
+  data() {
+    return {
+      username: window.sessionStorage.getItem('username'),
+      isCollapse: false,
+      btnicon: 'icon-cebianshouqi',
+    };
+  },
+  methods: {
+    // 退出登录方法
+    logout() {
+      // 清除状态保持
+      window.sessionStorage.clear();
+      this.$router.push('/login');
+    },
+
+    //点击按钮，切换菜单的折叠与展开
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
+      if (this.isCollapse) {
+        this.btnicon = 'icon-cebianshouqi1';
+      } else {
+        this.btnicon = 'icon-cebianshouqi';
+      }
+    },
+  },
 };
 </script>
 
@@ -142,8 +210,30 @@ el-menu-item {
   color: #fff !important;
   background: #207bca !important;
 }
-/* .el-submenu .el-submenu__title:hover {
-  color: #2e95fb !important;
-  background: linear-gradient(270deg, #f2f7fc 0%, #fefefe 100%) !important;
-} */
+
+/* admin的用户显示 start */
+.el-dropdown-link {
+  cursor: pointer;
+  /* color: #fff; */
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+/* admin的用户显示 end */
+
+/* 侧边栏收缩按钮 start */
+.aside-con {
+  position: relative;
+}
+.toggle-btn {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+}
+.toggle-btn i {
+  color: #fff;
+}
+/* 侧边栏收缩按钮 end */
 </style>
