@@ -45,12 +45,24 @@ const getUserByName = async function(name) {
   }
 };
 
-//通过用户名方法测试
-// getUserByName('vow');
+//通过用户名ID删除用户
+const removeUser = async function(id) {
+  try {
+    await User.destroy({
+      where: {
+        id: id,
+      },
+    });
+    return '删除成功！';
+  } catch (error) {
+    console.log('删除失败！\n' + error);
+  }
+};
 
 //模块导出
 module.exports = {
   getUserById,
   getUserByName,
   getAllUser,
+  removeUser,
 };

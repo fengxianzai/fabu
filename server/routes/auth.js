@@ -6,8 +6,9 @@
 const user = require('../controllers/user.js');
 const router = require('koa-router')();
 const routes = router
-  .get('/login/:id', user.getUserInfo)
-  .get('/getUser/vow', user.getAllUsers)
-  .post('/login', user.postUserAuth);
+  .get('/login/:id', user.getUserInfo) //根据ID获取用户
+  .get('/getUser/vow', user.getAllUsers) //获取所有用户信息
+  .post('/login', user.postUserAuth) //用户登录发送
+  .del('/userMange/:id', user.removeUserById); //根据用户ID删除用户
 
 module.exports = routes;

@@ -1,5 +1,6 @@
 // controllers/user.js
 const user = require('../models/user.js');
+const jwt = require('../utils/jwt.js');
 
 //获取用户信息
 const getUserInfo = async function(ctx) {
@@ -36,9 +37,12 @@ const postUserAuth = async function(ctx) {
             info: '密码错误！',
           });
         } else {
+          let jwtToken = jwt.sign({ username: userInfo.username });
+          console.log(jwtToken);
           return (ctx.response.body = {
             success: true,
             info: '密码正确！',
+            token: jwtToken,
           });
         }
       }
@@ -51,8 +55,30 @@ const postUserAuth = async function(ctx) {
   }
 };
 
+// 根据用户ID删除用户信息
+const removeUserById = async function(ctx) {
+  //将查询到的结果放在response的body中
+  // ctx.response.body =
+  try {
+    //获取url里传过来的参数的id
+    const id = ctx.request.params.id;
+    //通过模型中定义的方法通过id进行删除
+    await user.removeUser(id);
+    return (ctx.response.body = {
+      success: true,
+      info: '用户删除成功！',
+    });
+  } catch (error) {
+    return (ctx.response.body = {
+      success: false,
+      info: '删除失败！',
+    });
+  }
+};
+
 module.exports = {
   getUserInfo,
   postUserAuth,
   getAllUsers,
+  removeUserById,
 };

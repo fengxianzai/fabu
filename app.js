@@ -2,6 +2,9 @@ var koa2 = require('koa2'); //引入koa2
 const bodyParser = require('koa-bodyparser'); //引入bodyparser，用于解析post发送的请求
 const cors = require('koa2-cors'); //处理跨域
 const routers = require('./server/routes/index'); //引入汇总路由
+// const static = require('koa-static');
+// const path = require('path');
+// const { historyApiFallback } = require('koa2-connect-history-api-fallback');
 var app = new koa2(); //创建实例
 app.use(bodyParser());
 

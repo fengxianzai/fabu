@@ -18,16 +18,21 @@
           style="width: 100%;background:#fafafb"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column prop="id" label="用户ID" width="180">
+          <el-table-column prop="id" label="姓名" width="180">
           </el-table-column>
-          <el-table-column prop="user_name" label="用户名" width="180">
+          <el-table-column prop="user_name" label="邮箱" width="180">
           </el-table-column>
-          <el-table-column prop="password" label="加入时间"> </el-table-column>
-          <el-table-column prop="password" label="权限"> </el-table-column>
+          <el-table-column prop="password" label="电话"> </el-table-column>
+          <el-table-column prop="password" label="角色"> </el-table-column>
           <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
               <el-button type="primary" size="small">编辑</el-button>
-              <el-button type="primary" size="small">删除</el-button>
+              <el-button
+                @click="removeUserById(scope.row.id)"
+                type="danger"
+                size="small"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -35,7 +40,7 @@
       <el-col>
         <div style="margin: 20px 0 20px 10px">
           <el-button type="primary" @click="toggleSelection()">全选</el-button>
-          <el-button type="primary" @click="toggleSelection()"
+          <el-button type="danger" @click="toggleSelection()"
             >批量删除</el-button
           >
         </div>
@@ -52,6 +57,10 @@ export default {
     return {
       userData,
     };
+  },
+  // 请求用户数据
+  created() {
+    this.getUsersList();
   },
   methods: {
     // 用户全选
@@ -78,21 +87,43 @@ export default {
     rowClass() {
       return 'text-align: center;background:#fafafb;';
     },
-  },
-  // 请求用户数据
-  mounted() {
-    this.$axios
-      .get('/user/getUser/vow')
-      .then((res) => {
-        //请求成功以后的回调函数
-        this.userData = res.data;
+    // 获取用户列表
+    async getUsersList() {
+      await this.$axios
+        .get('/user/getUser/vow')
+        .then((res) => {
+          //请求成功以后的回调函数
+          this.userData = res.data;
+        })
+        .catch((error) => {
+          //回调函数
+          //请求失败或者then里面的代码出现bug的时候
+          console.log('http请求失败');
+          console.log(error); //期望从服务端返回错误信息
+        });
+    },
+    // 根据ID删除对应用户信息
+    removeUserById(id) {
+      // 弹框询问用户是否删除用户
+      this.$confirm('此操作将永久删除用户，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancleButtonText: '取消',
+        type: 'warning',
       })
-      .catch((error) => {
-        //回调函数
-        //请求失败或者then里面的代码出现bug的时候
-        console.log('http请求失败');
-        console.log(error); //期望从服务端返回错误信息
-      });
+        .then(() => {
+          this.$axios.delete('/user/userMange/' + id).then((res) => {
+            if (res.data.success) {
+              this.$message({ type: 'success', message: '删除成功！' });
+              this.getUsersList();
+            } else {
+              this.$message.error(res.data.info); //删除失败，显示提示语
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({ type: 'info', message: '已取消删除！' });
+        });
+    },
   },
 };
 </script>

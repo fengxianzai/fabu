@@ -1,9 +1,11 @@
 <template>
   <div class="content">
     <el-card shadow="never" class="FormCard">
+      <!-- 登录标题 -->
       <el-row>
-        <el-col :span="24"><p class="title">CodeVow系统</p></el-col>
+        <el-col :span="24"><p class="title">法规系统运维平台</p></el-col>
       </el-row>
+      <!-- 登录表单 -->
       <el-form
         ref="loginForm"
         label-position="top"
@@ -11,6 +13,7 @@
         :model="formLogin"
         size="default"
       >
+        <!-- 登录用户名 -->
         <el-form-item prop="username">
           <el-input
             type="text"
@@ -21,6 +24,8 @@
             <i slot="prepend" class="el-icon-user-solid"></i>
           </el-input>
         </el-form-item>
+
+        <!-- 登录密码 -->
         <el-form-item prop="password">
           <el-input
             @keyup.enter.native="handleBindPhone"
@@ -33,8 +38,11 @@
             <i slot="prepend" class="el-icon-s-data"></i>
           </el-input>
         </el-form-item>
+
+        <!-- 记住密码 -->
         <el-checkbox v-model="checked" class="remeberPwd">记住密码</el-checkbox>
 
+        <!-- 登录按钮 -->
         <el-button
           size="medium"
           @click="handleBindPhone"
@@ -84,8 +92,9 @@ export default {
   },
   methods: {
     handleBindPhone() {
-      this.$refs.loginForm.validate(() => {
-        this.$axios
+      this.$refs.loginForm.validate(async (valid) => {
+        if (!valid) return; //false 不执行登录
+        await this.$axios
           .post('/user/login', this.formLogin) //将登录信息发送给后端
           .then((res) => {
             //axios返回的数据都在res.data里
@@ -95,7 +104,10 @@ export default {
                 type: 'success',
                 message: '登录成功！',
               });
-              this.$router.push('/admin'); //进入Wlog页面，登录成功
+              // 将后端返回的token存储在本地LocalStorage中
+              window.localStorage.setItem('jwtToken', res.data.token);
+              this.$router.push('/admin/home'); //进入Wlog页面，登录成功
+              // this.$router.push({ path: 'admin' }); //进入Wlog页面，登录成功
             } else {
               this.$message.error(res.data.info); //登录失败，显示提示语
             }
@@ -121,9 +133,11 @@ p {
 }
 .title {
   font-size: 22px;
-  color: #707070;
-  letter-spacing: 2px;
+  /* color: #707070;
+  letter-spacing: 2px; */
   font-weight: 700;
+  letter-spacing: 4px;
+  color: #409eff;
 }
 .FormCard {
   width: 400px;
