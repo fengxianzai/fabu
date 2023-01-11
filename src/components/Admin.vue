@@ -82,17 +82,11 @@
           style="height:58px;background:#fafafb;text-align: right;font-size: 12px;border-bottom:1px solid #dbdcde"
         >
           <el-row type="flex" align="middle" style="height:100%">
-            <el-col :span="6">
-              <el-input
-                placeholder="输入你要搜索的内容"
-                suffix-icon="el-icon-search"
-              />
-            </el-col>
-            <el-col :span="6" :offset="14" style="height:30px">
+            <el-col :span="6" :offset="19" style="height:30px">
               <el-row
                 type="flex"
                 align="middle"
-                justify="right"
+                justify="end"
                 style="height:100%"
               >
                 <el-col>
@@ -125,17 +119,6 @@
         </el-header>
         <!-- 主页部分main -->
         <el-main style="background:#f1f1f2">
-          <el-breadcrumb
-            separator-class="el-icon-arrow-right"
-            style="margin:20px 0 26px 0;border-bottom: 1px solid #dbdcde;padding-bottom: 8px;"
-          >
-            <el-breadcrumb-item :to="{ path: '/admin/home' }"
-              >运维管理</el-breadcrumb-item
-            >
-            <el-breadcrumb-item><a href="/">运维台账</a></el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-          </el-breadcrumb>
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -176,9 +159,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.el-aside {
-  height: 100vh;
-}
 h3 {
   padding: 20px 0 20px 20px;
   letter-spacing: 4px;
@@ -192,6 +172,7 @@ el-menu-item {
 }
 .el-menu {
   border: none;
+  height: 100vh;
 }
 .el-submenu {
   border-bottom: 1px solid #3f4857;

@@ -8,16 +8,11 @@ var User = sequelize.define(
   {
     // 用户ID
     id: {
-      autoIncrement: true,
+      // autoIncrement: true,
       type: Sequelize.INTEGER(11), // 字段类型
       allowNull: false,
       primaryKey: true,
     },
-    // // 用户角色ID
-    // rid: {
-    //   type: Sequelize.INTEGER(2),
-    //   allowNull: false,
-    // },
     // 用户名
     user_name: {
       type: Sequelize.CHAR(50),
@@ -28,21 +23,31 @@ var User = sequelize.define(
       type: Sequelize.CHAR(128),
       allowNull: false,
     },
-    // // 手机号
-    // mobile: {
-    //   type: Sequelize.INTEGER(11), // 字段类型
-    //   allowNull: false,
-    // },
-    // // 邮箱
-    // email: {
-    //   type: Sequelize.INTEGER(20), // 字段类型
-    //   allowNull: false,
-    // },
-    // // 令牌
-    // token: {
-    //   type: Sequelize.STRING(100), // 字段类型
-    //   allowNull: false,
-    // },
+    // 用户角色
+    rid: {
+      type: Sequelize.STRING(10),
+      allowNull: true,
+    },
+    // 手机号
+    mobile: {
+      type: Sequelize.CHAR(20), // 字段类型
+      allowNull: true,
+    },
+    // 邮箱
+    email: {
+      type: Sequelize.CHAR(20), // 字段类型
+      allowNull: true,
+    },
+    // 创建时间
+    createdTime: {
+      type: Sequelize.CHAR(20), // 字段类型
+      allowNull: true,
+    },
+    // 状态
+    ms_state: {
+      type: Sequelize.INTEGER(2), // 字段类型
+      allowNull: true,
+    },
   },
   {
     timestamps: false,

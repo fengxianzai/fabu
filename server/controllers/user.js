@@ -2,7 +2,7 @@
 const user = require('../models/user.js');
 const jwt = require('../utils/jwt.js');
 
-//获取用户信息
+//通过id获取用户信息
 const getUserInfo = async function(ctx) {
   //获取url里传过来的参数的id
   const id = ctx.query.id;
@@ -14,8 +14,31 @@ const getUserInfo = async function(ctx) {
 
 // 获取所有用户信息
 const getAllUsers = async function(ctx) {
-  const vow_val = await user.getAllUser();
-  ctx.response.body = vow_val;
+  try {
+    const vow_val = await user.getAllUser();
+    console.log('成功获取所有用户数据！');
+    const totalpage = vow_val.length; //用户总记录数
+    const pagesize = parseInt(ctx.query.pagesize); //每页显示条数
+    const pagenum = parseInt(ctx.query.pagenum) - 1; //总页数
+    const newArr = vow_val.slice(pagenum, pagesize + pagesize);
+    const queryName = ctx.query.query; //用户搜索的信息用户名
+    if (queryName) {
+      const result = await user.getUserByName(queryName);
+      const vow_data = {
+        totalpage: totalpage,
+        users: result,
+      };
+      ctx.response.body = vow_data;
+    } else {
+      const vow_data = {
+        totalpage: totalpage,
+        users: newArr,
+      };
+      ctx.response.body = vow_data;
+    }
+  } catch (error) {
+    console.log('获取所有用户数据失败！\n' + error);
+  }
 };
 
 //通过post请求过来的登录数据进行验证
@@ -77,9 +100,28 @@ const removeUserById = async function(ctx) {
   }
 };
 
+// 添加用户信息
+const addUser = async function(ctx) {
+  try {
+    const userDate = ctx.request.body;
+    await user.addUser(userDate);
+    // console.log(userDate);
+    return (ctx.response.body = {
+      success: true,
+      info: '添加用户成功！',
+    });
+  } catch (error) {
+    return (ctx.response.body = {
+      success: false,
+      info: '添加用户失败！',
+    });
+  }
+};
+
 module.exports = {
   getUserInfo,
   postUserAuth,
   getAllUsers,
   removeUserById,
+  addUser,
 };

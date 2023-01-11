@@ -1,5 +1,6 @@
 // models/user.js
 const userModel = require('../schema/user.js');
+const getDate = require('../utils/getDate.js');
 const User = userModel.User;
 
 // 查询所有用户
@@ -59,10 +60,34 @@ const removeUser = async function(id) {
   }
 };
 
+// 添加用户信息
+const addUser = async function(userDate) {
+  try {
+    const users = await User.findAll();
+    const idNum = users.length + 2;
+    const dt = getDate.getLocalTime();
+    let { username, password, mobile, email } = userDate;
+    await User.create({
+      id: idNum,
+      user_name: username,
+      password: password,
+      rid: '普通用户',
+      mobile: mobile,
+      email: email,
+      createdTime: dt,
+      ms_state: 0,
+    });
+    console.log('添加用户成功！');
+  } catch (error) {
+    console.log('添加用户失败！\n' + error);
+  }
+};
+
 //模块导出
 module.exports = {
   getUserById,
   getUserByName,
   getAllUser,
   removeUser,
+  addUser,
 };
