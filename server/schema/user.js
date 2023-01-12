@@ -12,6 +12,7 @@ var User = sequelize.define(
       type: Sequelize.INTEGER(11), // 字段类型
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true, // 是否自增
     },
     // 用户名
     user_name: {

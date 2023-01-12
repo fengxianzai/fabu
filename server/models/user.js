@@ -54,7 +54,17 @@ const removeUser = async function(id) {
         id: id,
       },
     });
-    return '删除成功！';
+    // 删除ID，并重新添加列ID，并让ID自增
+    const { DataTypes } = require('sequelize');
+    const db = require('../config/db.js');
+    const sequelize = db.Todolist;
+    const queryInterface = sequelize.getQueryInterface();
+    await queryInterface.removeColumn('users', 'id');
+    await queryInterface.addColumn('users', 'id', {
+      type: DataTypes.INTEGER(11),
+      primaryKey: true,
+      autoIncrement: true,
+    });
   } catch (error) {
     console.log('删除失败！\n' + error);
   }
@@ -64,7 +74,7 @@ const removeUser = async function(id) {
 const addUser = async function(userDate) {
   try {
     const users = await User.findAll();
-    const idNum = users.length + 2;
+    const idNum = users.length + 1;
     const dt = getDate.getLocalTime();
     let { username, password, mobile, email } = userDate;
     await User.create({

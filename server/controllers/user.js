@@ -81,8 +81,6 @@ const postUserAuth = async function(ctx) {
 
 // 根据用户ID删除用户信息
 const removeUserById = async function(ctx) {
-  //将查询到的结果放在response的body中
-  // ctx.response.body =
   try {
     //获取url里传过来的参数的id
     const id = ctx.request.params.id;

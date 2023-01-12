@@ -33,7 +33,7 @@ async function testConnect() {
     console.error('Unable to connect to the database:', error);
   }
 }
-testConnect();
+// testConnect();
 
 module.exports = {
   Todolist, // 将Todolist暴露出接口方便Model调用
