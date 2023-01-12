@@ -76,7 +76,7 @@
         </div>
       </el-aside>
       <!-- 右边栏 -->
-      <el-container>
+      <el-container style="height: 100vh;">
         <!-- 顶部栏header -->
         <el-header
           style="height:58px;background:#fafafb;text-align: right;font-size: 12px;border-bottom:1px solid #dbdcde"
@@ -118,7 +118,7 @@
           </el-row>
         </el-header>
         <!-- 主页部分main -->
-        <el-main style="background:#f1f1f2">
+        <el-main style="padding-top:10px;background:#f1f1f2;">
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -172,7 +172,6 @@ el-menu-item {
 }
 .el-menu {
   border: none;
-  height: 100vh;
 }
 .el-submenu {
   border-bottom: 1px solid #3f4857;

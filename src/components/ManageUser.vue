@@ -172,7 +172,7 @@ export default {
       queryInfo: {
         query: '',
         pagenum: 1, //当前的页数
-        pagesize: 2, //每页的数量
+        pagesize: 5, //每页的数量
       },
       total: 0,
       addDialogVisible: false,
@@ -340,7 +340,7 @@ export default {
 
 /* 分页 start */
 .pagediv {
-  margin: 20px 0px 10px 0px;
+  margin: 0px 0px 20px 0px;
   text-align: center;
 }
 el-pagination {

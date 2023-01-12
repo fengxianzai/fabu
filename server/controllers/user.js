@@ -20,19 +20,22 @@ const getAllUsers = async function(ctx) {
     const totalpage = vow_val.length; //用户总记录数
     const pagesize = parseInt(ctx.query.pagesize); //每页显示条数
     const pagenum = parseInt(ctx.query.pagenum) - 1; //总页数
-    const newArr = vow_val.slice(pagenum, pagesize + pagesize);
+    var newArr1 = [];
+    for (var i = 0; i < vow_val.length; i += pagesize) {
+      newArr1.push(vow_val.slice(i, i + pagesize));
+    }
+    const vow_data = {
+      totalpage: totalpage,
+      users: newArr1[pagenum],
+    };
+    ctx.response.body = vow_data;
+
     const queryName = ctx.query.query; //用户搜索的信息用户名
     if (queryName) {
       const result = await user.getUserByName(queryName);
       const vow_data = {
         totalpage: totalpage,
         users: result,
-      };
-      ctx.response.body = vow_data;
-    } else {
-      const vow_data = {
-        totalpage: totalpage,
-        users: newArr,
       };
       ctx.response.body = vow_data;
     }
