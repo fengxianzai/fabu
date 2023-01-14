@@ -108,7 +108,7 @@
               <el-input v-model="editUserForm.mobile"></el-input>
             </el-form-item>
             <el-row>
-              <el-col :span="16">
+              <el-col :span="12">
                 <el-form-item label="用户角色:" prop="rid">
                   <el-select v-model="editUserForm.rid" placeholder="选择角色">
                     <el-option
@@ -119,6 +119,14 @@
                     >
                     </el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8" :offset="1">
+                <el-form-item label="用户状态:" prop="ms_state">
+                  <!-- `checked` 为 true 或 false -->
+                  <el-checkbox v-model="editUserForm.ms_state"
+                    >开启</el-checkbox
+                  >
                 </el-form-item>
               </el-col>
             </el-row>

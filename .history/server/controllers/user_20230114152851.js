@@ -16,14 +16,7 @@ const getUserInfo = async function(ctx) {
 const getAllUsers = async function(ctx) {
   try {
     const vow_val = await user.getAllUser();
-    // 处理用户状态
-    for (var n = 0; n < vow_val.length; n++) {
-      if (vow_val[n].dataValues.ms_state) {
-        vow_val[n].dataValues.ms_state = false;
-      } else {
-        vow_val[n].dataValues.ms_state = true;
-      }
-    }
+    console.log('成功获取所有用户数据！');
     const totalpage = vow_val.length; //用户总记录数
     const pagesize = parseInt(ctx.query.pagesize); //每页显示条数
     const pagenum = parseInt(ctx.query.pagenum) - 1; //总页数
@@ -31,7 +24,7 @@ const getAllUsers = async function(ctx) {
     for (var i = 0; i < vow_val.length; i += pagesize) {
       newArr1.push(vow_val.slice(i, i + pagesize));
     }
-
+    console.log(vow_val[0].dataValues:);
     const vow_data = {
       totalpage: totalpage,
       users: newArr1[pagenum],
@@ -144,31 +137,6 @@ const editUser = async function(ctx) {
   }
 };
 
-// 更新用户状态
-const updateState = async function(ctx) {
-  try {
-    const stateDate = ctx.request.params;
-    const id = stateDate.id;
-    // 转换用户状态bool类型为int型
-    if (JSON.parse(stateDate.ms_state)) {
-      const ms_state = 0;
-      await user.updateState(id, ms_state);
-    } else {
-      const ms_state = 1;
-      await user.updateState(id, ms_state);
-    }
-    return (ctx.response.body = {
-      success: true,
-      info: '成功修改用户状态！',
-    });
-  } catch (error) {
-    return (ctx.response.body = {
-      success: false,
-      info: '编辑状态失败！\n' + error,
-    });
-  }
-};
-
 module.exports = {
   getUserInfo,
   postUserAuth,
@@ -176,5 +144,4 @@ module.exports = {
   removeUserById,
   addUser,
   editUser,
-  updateState,
 };

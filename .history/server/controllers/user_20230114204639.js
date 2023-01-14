@@ -162,10 +162,7 @@ const updateState = async function(ctx) {
       info: '成功修改用户状态！',
     });
   } catch (error) {
-    return (ctx.response.body = {
-      success: false,
-      info: '编辑状态失败！\n' + error,
-    });
+    console.log(222);
   }
 };
 

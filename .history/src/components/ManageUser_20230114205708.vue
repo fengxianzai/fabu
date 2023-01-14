@@ -108,7 +108,7 @@
               <el-input v-model="editUserForm.mobile"></el-input>
             </el-form-item>
             <el-row>
-              <el-col :span="16">
+              <el-col :span="12">
                 <el-form-item label="用户角色:" prop="rid">
                   <el-select v-model="editUserForm.rid" placeholder="选择角色">
                     <el-option

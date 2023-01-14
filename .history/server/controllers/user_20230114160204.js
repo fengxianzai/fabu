@@ -30,6 +30,12 @@ const getAllUsers = async function(ctx) {
     var newArr1 = [];
     for (var i = 0; i < vow_val.length; i += pagesize) {
       newArr1.push(vow_val.slice(i, i + pagesize));
+      // console.log(newArr1[i][i].dataValues);
+      // // if (vow_val[i].dataValues.ms_state) {
+      // //   vow_val[i].dataValues.ms_state = false;
+      // // } else {
+      // //   vow_val[i].dataValues.ms_state = true;
+      // // }
     }
 
     const vow_data = {
@@ -144,31 +150,6 @@ const editUser = async function(ctx) {
   }
 };
 
-// 更新用户状态
-const updateState = async function(ctx) {
-  try {
-    const stateDate = ctx.request.params;
-    const id = stateDate.id;
-    // 转换用户状态bool类型为int型
-    if (JSON.parse(stateDate.ms_state)) {
-      const ms_state = 0;
-      await user.updateState(id, ms_state);
-    } else {
-      const ms_state = 1;
-      await user.updateState(id, ms_state);
-    }
-    return (ctx.response.body = {
-      success: true,
-      info: '成功修改用户状态！',
-    });
-  } catch (error) {
-    return (ctx.response.body = {
-      success: false,
-      info: '编辑状态失败！\n' + error,
-    });
-  }
-};
-
 module.exports = {
   getUserInfo,
   postUserAuth,
@@ -176,5 +157,4 @@ module.exports = {
   removeUserById,
   addUser,
   editUser,
-  updateState,
 };

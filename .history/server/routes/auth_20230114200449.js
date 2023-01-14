@@ -13,6 +13,6 @@ const routes = router
   .post('/addUser', user.addUser) //添加用户信息
   .post('/editUser', user.editUser) //编辑用户信息
   // .post('/changState', user.updateState); //更新用户状态
-  .put('/changState/:id/state/:ms_state', user.updateState);
+  .put('/changState/:id/state/ms_state', user.updateState);
 
 module.exports = routes;

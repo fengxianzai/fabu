@@ -164,7 +164,7 @@ const updateState = async function(ctx) {
   } catch (error) {
     return (ctx.response.body = {
       success: false,
-      info: '编辑状态失败！\n' + error,
+      info: '修改用户状态失败！',
     });
   }
 };

@@ -108,7 +108,7 @@
               <el-input v-model="editUserForm.mobile"></el-input>
             </el-form-item>
             <el-row>
-              <el-col :span="16">
+              <el-col :span="12">
                 <el-form-item label="用户角色:" prop="rid">
                   <el-select v-model="editUserForm.rid" placeholder="选择角色">
                     <el-option
@@ -119,6 +119,14 @@
                     >
                     </el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8" :offset="1">
+                <el-form-item label="用户状态:" prop="ms_state">
+                  <!-- `checked` 为 true 或 false -->
+                  <el-checkbox v-model="editUserForm.ms_state"
+                    >开启</el-checkbox
+                  >
                 </el-form-item>
               </el-col>
             </el-row>
@@ -358,6 +366,7 @@ export default {
     },
     // 打开编辑框
     openEdit(rawDate) {
+      console.log(rawDate);
       this.editUserName = '用户' + rawDate.user_name;
       this.editUserForm.id = rawDate.id;
       this.editUserForm.username = rawDate.user_name;
@@ -396,14 +405,17 @@ export default {
     //监听switch开关状态的改变
     async userStateChange(userinfo) {
       await this.$axios
-        .put('/user/changState/' + userinfo.id + '/state/' + userinfo.ms_state)
+        .post('/user/changState', {
+          id: userinfo.id,
+          ms_state: userinfo.ms_state,
+        })
         .then((res) => {
           //axios返回的数据都在res.data里
           if (res.data.success) {
             //如果成功
             this.$message({
               type: 'success',
-              message: '成功修改用户：' + userinfo.user_name + ' 状态！',
+              message: '成功修改用户：' + this.editUserName + '状态！',
             });
           } else {
             this.$message.error(res.data.info);

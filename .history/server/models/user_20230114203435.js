@@ -103,6 +103,7 @@ const editUser = async function(newUserDate) {
         email: newUserDate.email,
         mobile: newUserDate.mobile,
         rid: newUserDate.rid,
+        ms_state: false,
       },
       {
         where: {
@@ -119,8 +120,8 @@ const editUser = async function(newUserDate) {
 const updateState = async function(id, ms_state) {
   try {
     console.log(id, ms_state);
-    // const id = id;
-    // const ms_state = ms_state;
+    const id = id;
+    const ms_state = ms_state;
     await User.update(
       {
         ms_state: ms_state,

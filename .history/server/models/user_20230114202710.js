@@ -103,6 +103,7 @@ const editUser = async function(newUserDate) {
         email: newUserDate.email,
         mobile: newUserDate.mobile,
         rid: newUserDate.rid,
+        ms_state: false,
       },
       {
         where: {
@@ -118,9 +119,7 @@ const editUser = async function(newUserDate) {
 // 编辑用户状态
 const updateState = async function(id, ms_state) {
   try {
-    console.log(id, ms_state);
-    // const id = id;
-    // const ms_state = ms_state;
+    // console.log(stateDate);
     await User.update(
       {
         ms_state: ms_state,

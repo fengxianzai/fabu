@@ -148,24 +148,19 @@ const editUser = async function(ctx) {
 const updateState = async function(ctx) {
   try {
     const stateDate = ctx.request.params;
-    const id = stateDate.id;
     // 转换用户状态bool类型为int型
-    if (JSON.parse(stateDate.ms_state)) {
-      const ms_state = 0;
-      await user.updateState(id, ms_state);
+    if (stateDate.ms_state) {
+      stateDate.ms_state = 1;
     } else {
-      const ms_state = 1;
-      await user.updateState(id, ms_state);
+      stateDate.ms_state = 0;
     }
+    await user.updateState(stateDate);
     return (ctx.response.body = {
       success: true,
       info: '成功修改用户状态！',
     });
   } catch (error) {
-    return (ctx.response.body = {
-      success: false,
-      info: '编辑状态失败！\n' + error,
-    });
+    console.log(222);
   }
 };
 
