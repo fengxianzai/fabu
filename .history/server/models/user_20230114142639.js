@@ -103,7 +103,7 @@ const editUser = async function(newUserDate) {
         email: newUserDate.email,
         mobile: newUserDate.mobile,
         rid: newUserDate.rid,
-        ms_state: false,
+        ms_state: true,
       },
       {
         where: {

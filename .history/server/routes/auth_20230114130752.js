@@ -11,6 +11,6 @@ const routes = router
   .post('/login', user.postUserAuth) //用户登录发送
   .del('/userMange/:id', user.removeUserById) //根据用户ID删除用户
   .post('/addUser', user.addUser) //添加用户信息
-  .post('/editUser', user.editUser);
+  .update('/editUser', user.editUser);
 
 module.exports = routes;

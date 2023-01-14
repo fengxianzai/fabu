@@ -103,7 +103,7 @@ const editUser = async function(newUserDate) {
         email: newUserDate.email,
         mobile: newUserDate.mobile,
         rid: newUserDate.rid,
-        ms_state: false,
+        ms_state: true,
       },
       {
         where: {
@@ -111,6 +111,13 @@ const editUser = async function(newUserDate) {
         },
       }
     );
+    // const user = await User.findAll({
+    //   where: {
+    //     id: newUserDate.id,
+    //   },
+    // });
+    // // return user;
+    // console.log(user[0].user.dataValues);
   } catch (error) {
     console.log('编辑用户失败！\n' + error);
   }

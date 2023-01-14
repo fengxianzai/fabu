@@ -94,25 +94,15 @@ const addUser = async function(userDate) {
 };
 
 // 编辑用户信息
-const editUser = async function(newUserDate) {
+const editUser = async function(id) {
   try {
-    const updateRes = await User.update(
-      {
-        user_name: newUserDate.username,
-        password: newUserDate.password,
-        email: newUserDate.email,
-        mobile: newUserDate.mobile,
-        rid: newUserDate.rid,
-        ms_state: false,
+    await User.destroy({
+      where: {
+        id: id,
       },
-      {
-        where: {
-          id: newUserDate.id,
-        },
-      }
-    );
+    });
   } catch (error) {
-    console.log('编辑用户失败！\n' + error);
+    console.log('编辑失败！\n' + error);
   }
 };
 

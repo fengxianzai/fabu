@@ -80,7 +80,7 @@
     <el-row>
       <el-col>
         <el-dialog
-          :title="editUserName"
+          title="编辑用户"
           :visible.sync="dialogFormVisible"
           @close="editDialogClosed"
           width="34%"
@@ -161,6 +161,7 @@
           <el-table-column prop="rid" label="角色"> </el-table-column>
           <el-table-column prop="ms_state" label="状态">
             <template slot-scope="scope">
+              <!-- {{ Boolean(scope.row.mg_state) }} -->
               <el-switch
                 v-model="scope.row.mg_state"
                 active-color="#13ce66"
@@ -172,7 +173,7 @@
           <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
               <el-button
-                @click="openEdit(scope.row)"
+                @click="dialogFormVisible = true"
                 type="primary"
                 size="small"
                 >编辑</el-button
@@ -253,7 +254,6 @@ export default {
       },
       //编辑用户的表单数据
       editUserForm: {
-        id: '',
         username: '',
         password: '',
         email: '',
@@ -261,19 +261,21 @@ export default {
         rid: '',
         ms_state: false,
       },
-      // 编辑用户标题
-      editUserName: '',
       // 用户角色选项
       ridoptions: [
         {
-          value: '超级管理员',
+          value: '选项1',
           label: '超级管理员',
         },
         {
-          value: '普通用户',
+          value: '选项2',
           label: '普通用户',
         },
       ],
+      // 用户角色选择值
+      // selectvalue: ,
+      // 用户状态选项
+      // ms_stateChecked: this.editUserForm.ms_state,
       //添加表单的验证规则对象
       addUserFormRules: {
         username: [
@@ -362,19 +364,6 @@ export default {
           });
       });
     },
-    // 打开编辑框
-    openEdit(rawDate) {
-      console.log(rawDate);
-      this.editUserName = '用户' + rawDate.user_name;
-      this.editUserForm.id = rawDate.id;
-      this.editUserForm.username = rawDate.user_name;
-      this.editUserForm.password = rawDate.password;
-      this.editUserForm.email = rawDate.email;
-      this.editUserForm.mobile = rawDate.mobile;
-      this.editUserForm.rid = rawDate.rid;
-      this.editUserForm.ms_state = rawDate.ms_state;
-      this.dialogFormVisible = true;
-    },
     // 点击按钮，编辑用户信息
     editUser() {
       this.$refs.editUserFormRef.validate(async (valid) => {
@@ -388,10 +377,10 @@ export default {
               //如果成功
               this.$message({
                 type: 'success',
-                message: '成功修改用户：' + this.editUserName + '信息！',
+                message: '编辑成功！',
               });
               // 隐藏编辑用户的对话框
-              this.dialogFormVisible = false;
+              this.addDialogVisible = false;
               //重新获取用户列表数据
               this.getUsersList();
             } else {

@@ -80,7 +80,7 @@
     <el-row>
       <el-col>
         <el-dialog
-          :title="editUserName"
+          title="编辑用户"
           :visible.sync="dialogFormVisible"
           @close="editDialogClosed"
           width="34%"
@@ -261,8 +261,6 @@ export default {
         rid: '',
         ms_state: false,
       },
-      // 编辑用户标题
-      editUserName: '',
       // 用户角色选项
       ridoptions: [
         {
@@ -364,15 +362,7 @@ export default {
     },
     // 打开编辑框
     openEdit(rawDate) {
-      console.log(rawDate);
-      this.editUserName = '用户' + rawDate.user_name;
       this.editUserForm.id = rawDate.id;
-      this.editUserForm.username = rawDate.user_name;
-      this.editUserForm.password = rawDate.password;
-      this.editUserForm.email = rawDate.email;
-      this.editUserForm.mobile = rawDate.mobile;
-      this.editUserForm.rid = rawDate.rid;
-      this.editUserForm.ms_state = rawDate.ms_state;
       this.dialogFormVisible = true;
     },
     // 点击按钮，编辑用户信息
@@ -388,7 +378,7 @@ export default {
               //如果成功
               this.$message({
                 type: 'success',
-                message: '成功修改用户：' + this.editUserName + '信息！',
+                message: res.data.info,
               });
               // 隐藏编辑用户的对话框
               this.dialogFormVisible = false;

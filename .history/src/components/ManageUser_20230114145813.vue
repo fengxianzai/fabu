@@ -261,8 +261,7 @@ export default {
         rid: '',
         ms_state: false,
       },
-      // 编辑用户标题
-      editUserName: '',
+      editUserName: this.editUserForm.username,
       // 用户角色选项
       ridoptions: [
         {
@@ -365,7 +364,6 @@ export default {
     // 打开编辑框
     openEdit(rawDate) {
       console.log(rawDate);
-      this.editUserName = '用户' + rawDate.user_name;
       this.editUserForm.id = rawDate.id;
       this.editUserForm.username = rawDate.user_name;
       this.editUserForm.password = rawDate.password;
@@ -388,7 +386,7 @@ export default {
               //如果成功
               this.$message({
                 type: 'success',
-                message: '成功修改用户：' + this.editUserName + '信息！',
+                message: res.data.info,
               });
               // 隐藏编辑用户的对话框
               this.dialogFormVisible = false;

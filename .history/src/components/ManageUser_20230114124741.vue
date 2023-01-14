@@ -80,17 +80,11 @@
     <el-row>
       <el-col>
         <el-dialog
-          :title="editUserName"
+          title="编辑用户"
           :visible.sync="dialogFormVisible"
-          @close="editDialogClosed"
           width="34%"
         >
-          <el-form
-            label-width="76px"
-            :model="editUserForm"
-            :rules="addUserFormRules"
-            ref="editUserFormRef"
-          >
+          <el-form label-width="76px" :model="editUserForm">
             <el-form-item label="用户名:" prop="username">
               <!-- prop是验证规则属性 -->
               <el-input v-model="editUserForm.username"></el-input>
@@ -110,7 +104,7 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="用户角色:" prop="rid">
-                  <el-select v-model="editUserForm.rid" placeholder="选择角色">
+                  <el-select v-model="selectvalue" placeholder="选择角色">
                     <el-option
                       v-for="item in ridoptions"
                       :key="item.value"
@@ -124,16 +118,16 @@
               <el-col :span="8" :offset="1">
                 <el-form-item label="用户状态:" prop="ms_state">
                   <!-- `checked` 为 true 或 false -->
-                  <el-checkbox v-model="editUserForm.ms_state"
-                    >开启</el-checkbox
-                  >
+                  <el-checkbox v-model="ms_stateChecked">开启</el-checkbox>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="editUser()">确 定</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
       </el-col>
@@ -161,6 +155,7 @@
           <el-table-column prop="rid" label="角色"> </el-table-column>
           <el-table-column prop="ms_state" label="状态">
             <template slot-scope="scope">
+              <!-- {{ Boolean(scope.row.mg_state) }} -->
               <el-switch
                 v-model="scope.row.mg_state"
                 active-color="#13ce66"
@@ -172,7 +167,7 @@
           <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
               <el-button
-                @click="openEdit(scope.row)"
+                @click="dialogFormVisible = true"
                 type="primary"
                 size="small"
                 >编辑</el-button
@@ -253,27 +248,28 @@ export default {
       },
       //编辑用户的表单数据
       editUserForm: {
-        id: '',
         username: '',
         password: '',
         email: '',
         mobile: '',
         rid: '',
-        ms_state: false,
+        ms_state: '',
       },
-      // 编辑用户标题
-      editUserName: '',
       // 用户角色选项
       ridoptions: [
         {
-          value: '超级管理员',
+          value: '选项1',
           label: '超级管理员',
         },
         {
-          value: '普通用户',
+          value: '选项2',
           label: '普通用户',
         },
       ],
+      // 用户角色选择值
+      selectvalue: '',
+      // 用户状态选项
+      ms_stateChecked: false,
       //添加表单的验证规则对象
       addUserFormRules: {
         username: [
@@ -333,10 +329,6 @@ export default {
     addDialogClosed() {
       this.$refs.addUserFormRef.resetFields();
     },
-    //监听编辑用户对话框的关闭状态
-    editDialogClosed() {
-      this.$refs.editUserFormRef.resetFields();
-    },
     // 点击按钮，添加新用户
     addUser() {
       this.$refs.addUserFormRef.validate(async (valid) => {
@@ -362,44 +354,8 @@ export default {
           });
       });
     },
-    // 打开编辑框
-    openEdit(rawDate) {
-      console.log(rawDate);
-      this.editUserName = '用户' + rawDate.user_name;
-      this.editUserForm.id = rawDate.id;
-      this.editUserForm.username = rawDate.user_name;
-      this.editUserForm.password = rawDate.password;
-      this.editUserForm.email = rawDate.email;
-      this.editUserForm.mobile = rawDate.mobile;
-      this.editUserForm.rid = rawDate.rid;
-      this.editUserForm.ms_state = rawDate.ms_state;
-      this.dialogFormVisible = true;
-    },
     // 点击按钮，编辑用户信息
-    editUser() {
-      this.$refs.editUserFormRef.validate(async (valid) => {
-        if (!valid) return; //校验没通过，返回
-        // 发起编辑用户的网络请求
-        await this.$axios
-          .post('/user/editUser', this.editUserForm)
-          .then((res) => {
-            //axios返回的数据都在res.data里
-            if (res.data.success) {
-              //如果成功
-              this.$message({
-                type: 'success',
-                message: '成功修改用户：' + this.editUserName + '信息！',
-              });
-              // 隐藏编辑用户的对话框
-              this.dialogFormVisible = false;
-              //重新获取用户列表数据
-              this.getUsersList();
-            } else {
-              this.$message.error(res.data.info);
-            }
-          });
-      });
-    },
+    editUserById() {},
     // 获取用户列表
     async getUsersList() {
       await this.$axios
@@ -458,7 +414,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* 关闭表头全选按钮 start */
+/* 关闭表头全选按钮 */
 .el-table /deep/.disabledCheck > .cell .el-checkbox__inner {
   display: none !important;
   position: relative;
@@ -470,7 +426,6 @@ export default {
   text-align: center;
   width: 100%;
 }
-/* 关闭表头全选按钮 end */
 
 /* 分页 start */
 .pagediv {
@@ -481,4 +436,7 @@ el-pagination {
   width: 200px;
 }
 /* 分页 end */
+
+/* 编辑用户框 start */
+/* 编辑用户框 end */
 </style>

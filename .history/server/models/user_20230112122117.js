@@ -93,29 +93,6 @@ const addUser = async function(userDate) {
   }
 };
 
-// 编辑用户信息
-const editUser = async function(newUserDate) {
-  try {
-    const updateRes = await User.update(
-      {
-        user_name: newUserDate.username,
-        password: newUserDate.password,
-        email: newUserDate.email,
-        mobile: newUserDate.mobile,
-        rid: newUserDate.rid,
-        ms_state: false,
-      },
-      {
-        where: {
-          id: newUserDate.id,
-        },
-      }
-    );
-  } catch (error) {
-    console.log('编辑用户失败！\n' + error);
-  }
-};
-
 //模块导出
 module.exports = {
   getUserById,
@@ -123,5 +100,4 @@ module.exports = {
   getAllUser,
   removeUser,
   addUser,
-  editUser,
 };

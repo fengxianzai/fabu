@@ -388,7 +388,7 @@ export default {
               //如果成功
               this.$message({
                 type: 'success',
-                message: '成功修改用户：' + this.editUserName + '信息！',
+                message: res.data.info,
               });
               // 隐藏编辑用户的对话框
               this.dialogFormVisible = false;

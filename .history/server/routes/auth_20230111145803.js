@@ -10,7 +10,6 @@ const routes = router
   .get('/getUser/vow', user.getAllUsers) //获取所有用户信息
   .post('/login', user.postUserAuth) //用户登录发送
   .del('/userMange/:id', user.removeUserById) //根据用户ID删除用户
-  .post('/addUser', user.addUser) //添加用户信息
-  .post('/editUser', user.editUser);
+  .post('/addUser', user.addUser); //添加用户信息
 
 module.exports = routes;

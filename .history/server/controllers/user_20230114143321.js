@@ -126,7 +126,7 @@ const editUser = async function(ctx) {
     await user.editUser(newuserDate);
     return (ctx.response.body = {
       success: true,
-      info: '成功修改用户' + newuserDate.username + '信息！',
+      info: '编辑用户' + newuserDate.username + '成功！',
     });
   } catch (error) {
     return (ctx.response.body = {

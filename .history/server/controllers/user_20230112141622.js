@@ -119,28 +119,10 @@ const addUser = async function(ctx) {
   }
 };
 
-// 编辑用户信息
-const editUser = async function(ctx) {
-  try {
-    const newuserDate = ctx.request.body;
-    await user.editUser(newuserDate);
-    return (ctx.response.body = {
-      success: true,
-      info: '成功修改用户' + newuserDate.username + '信息！',
-    });
-  } catch (error) {
-    return (ctx.response.body = {
-      success: false,
-      info: '编辑用户失败！',
-    });
-  }
-};
-
 module.exports = {
   getUserInfo,
   postUserAuth,
   getAllUsers,
   removeUserById,
   addUser,
-  editUser,
 };
